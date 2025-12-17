@@ -48,8 +48,8 @@ function handleSignup(event) {
     let hasError = false;
     
     // Validate college email format
-    if (!email.includes('@college.edu')) {
-        document.getElementById('emailError').textContent = 'Please use your college email (@college.edu)';
+    if (!email.includes('@gst.sies.edu.in')) {
+        document.getElementById('emailError').textContent = 'Please use your college email (@gst.sies.edu.in)';
         document.getElementById('emailError').style.display = 'block';
         hasError = true;
     }
@@ -96,7 +96,7 @@ function handleLogin(event) {
     document.getElementById('loginEmailError').style.display = 'none';
     
     // Check if email is registered or is a valid college email
-    if (!registeredEmails.includes(email) && !email.includes('@college.edu')) {
+    if (!registeredEmails.includes(email) && !email.includes('@gst.sies.edu.in')) {
         document.getElementById('loginEmailError').textContent = 'Please use a valid college email';
         document.getElementById('loginEmailError').style.display = 'block';
         return;
