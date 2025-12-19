@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Club - CommunitySphere</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="club-style.css">
+</head>
+<body>
+    <!-- ===== HEADER ===== -->
+    <header>
+        <nav class="navbar">
+            <div class="logo-section">
+                <div class="logo">CC</div>
+                <h1 class="college-name">CommunitySphere</h1>
+            </div>
+            <div class="nav-right">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="technical.html" class="nav-link">Technical</a>
+                <a href="cultural.html" class="nav-link">Cultural</a>
+                <a href="sports.html" class="nav-link active">Sports</a>
+                <button class="theme-toggle" onclick="toggleTheme()">🌙 Toggle Theme</button>
+                <div class="auth-buttons">
+                    <button class="btn btn-login" onclick="openModal('loginModal')">Login</button>
+                    <button class="btn btn-signup" onclick="openModal('signupModal')">Sign Up</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ===== LOGIN MODAL ===== -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h2 class="form-title">Welcome Back!</h2>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="loginEmail">College Email</label>
+                    <input type="email" id="loginEmail" placeholder="your.prn@gst.sies.edu.in" required>
+                    <span class="error-message" id="loginEmailError"></span>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn btn-submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== SIGNUP MODAL ===== -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('signupModal')">&times;</span>
+            <h2 class="form-title">Join Our Community!</h2>
+            <form id="signupForm" onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPRN">College PRN</label>
+                    <input type="text" id="signupPRN" placeholder="Enter your PRN" required>
+                    <span class="error-message" id="prnError"></span>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">College Email</label>
+                    <input type="email" id="signupEmail" placeholder="your.prn@gst.sies.edu.in" required>
+                    <span class="error-message" id="emailError"></span>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" placeholder="Create a password" required>
+                </div>
+                <button type="submit" class="btn btn-submit">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== CLUB HEADER ===== -->
+    <section class="club-header">
+        <div class="club-header-content">
+            <div class="club-icon">⚽</div>
+            <h1 class="club-title">Sports Club</h1>
+            <p class="club-subtitle">Train, Compete, Win - Champions Are Made Here</p>
+        </div>
+    </section>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="club-main">
+        <div class="club-container">
+            <!-- Left Sidebar: Club Info -->
+            <aside class="club-sidebar">
+                <div class="info-box">
+                    <h3>About Sports Club</h3>
+                    <p>Play football, cricket, badminton, basketball, and more. Train with professional coaches, compete in tournaments, and represent your college with pride.</p>
+                </div>
+                <div class="info-box">
+                    <h3>📊 Club Stats</h3>
+                    <div class="stat-item">
+                        <span class="stat-label">Members:</span>
+                        <span class="stat-value">300+</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Posts:</span>
+                        <span class="stat-value" id="sports-post-count">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Events:</span>
+                        <span class="stat-value">15</span>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <h3>🎯 Focus Areas</h3>
+                    <div class="tag-list">
+                        <span class="tag">Cricket</span>
+                        <span class="tag">Football</span>
+                        <span class="tag">Basketball</span>
+                        <span class="tag">Badminton</span>
+                        <span class="tag">Athletics</span>
+                        <span class="tag">Volleyball</span>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Center: Post Feed -->
+            <section class="club-feed">
+                <!-- Auth Gate or Create Post Box -->
+                <div id="sports-auth-gate" class="auth-gate">
+                    <div class="auth-gate-icon">🔒</div>
+                    <h3 class="auth-gate-title">Join the Conversation</h3>
+                    <p class="auth-gate-message">Please login or sign up to access the Sports Club community, view posts, and share your achievements.</p>
+                    <div class="auth-gate-buttons">
+                        <button onclick="openModal('loginModal')" class="btn-auth-gate btn-auth-login">Login</button>
+                        <button onclick="openModal('signupModal')" class="btn-auth-gate btn-auth-signup">Sign Up</button>
+                    </div>
+                </div>
+
+                <div id="sports-create-post" class="create-post-box" style="display: none;">
+                    <h3>Share with Sports Club</h3>
+                    <div class="post-input-container">
+                        <input type="text" id="sports-username" placeholder="Your name" class="username-input">
+                        <textarea id="sports-post-content" placeholder="Share match updates, training tips, achievements..." rows="4"></textarea>
+                        <button onclick="createPost('sports')" class="btn-post">Post</button>
+                    </div>
+                </div>
+
+                <!-- Posts Feed -->
+                <div class="posts-container" id="sports-posts">
+                    <!-- Posts will be dynamically added here -->
+                </div>
+            </section>
+
+            <!-- Right Sidebar: Upcoming Events -->
+            <aside class="club-events">
+                <div class="info-box">
+                    <h3>📅 Upcoming Events</h3>
+                    <div class="event-item">
+                        <div class="event-date">
+                            <span class="event-day">22</span>
+                            <span class="event-month">DEC</span>
+                        </div>
+                        <div class="event-details">
+                            <h4>Inter-College Cricket</h4>
+                            <p>Annual championship</p>
+                        </div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-date">
+                            <span class="event-day">08</span>
+                            <span class="event-month">JAN</span>
+                        </div>
+                        <div class="event-details">
+                            <h4>Football Tournament</h4>
+                            <p>5-a-side competition</p>
+                        </div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-date">
+                            <span class="event-day">18</span>
+                            <span class="event-month">JAN</span>
+                        </div>
+                        <div class="event-details">
+                            <h4>Sports Day</h4>
+                            <p>All-sport mega event</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <h3>🏆 Recent Achievements</h3>
+                    <ul class="achievement-list">
+                        <li>Champions - State Football</li>
+                        <li>Runners-up - Cricket League</li>
+                        <li>5 National Players</li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <p>Made with ❤️ by <span class="footer-gradient">Parth, Aayush, and Lokesh</span></p>
+        <p style="margin-top: 0.8rem; font-size: 0.9rem; opacity: 0.7;">© 2024 CommunitySphere. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="club-script.js"></script>
+</body>
+</html>

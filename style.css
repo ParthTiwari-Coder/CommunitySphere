@@ -459,6 +459,10 @@ header {
     background: var(--bg-primary);
 }
 
+.clubs-section a {
+    text-decoration: none;
+}
+
 .clubs-container {
     max-width: 1400px;
     margin: 0 auto;
