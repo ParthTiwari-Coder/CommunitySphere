@@ -1,9 +1,40 @@
 // ===== CLUB POST MANAGEMENT SYSTEM =====
 
-// Initialize posts in memory (no localStorage usage)
+// Initialize posts from localStorage or create empty arrays
 let technicalPosts = [];
 let culturalPosts = [];
 let sportsPosts = [];
+
+// Load posts from localStorage on initialization
+function loadPostsFromStorage() {
+    const storedTechnicalPosts = localStorage.getItem('technicalPosts');
+    const storedCulturalPosts = localStorage.getItem('culturalPosts');
+    const storedSportsPosts = localStorage.getItem('sportsPosts');
+    
+    if (storedTechnicalPosts) {
+        try {
+            technicalPosts = JSON.parse(storedTechnicalPosts);
+        } catch (e) {
+            technicalPosts = [];
+        }
+    }
+    
+    if (storedCulturalPosts) {
+        try {
+            culturalPosts = JSON.parse(storedCulturalPosts);
+        } catch (e) {
+            culturalPosts = [];
+        }
+    }
+    
+    if (storedSportsPosts) {
+        try {
+            sportsPosts = JSON.parse(storedSportsPosts);
+        } catch (e) {
+            sportsPosts = [];
+        }
+    }
+}
 
 // Function to get posts for a specific club
 function getPosts(clubType) {
@@ -19,17 +50,20 @@ function getPosts(clubType) {
     }
 }
 
-// Function to save posts in memory
+// Function to save posts to localStorage
 function savePosts(clubType, posts) {
     switch(clubType) {
         case 'technical':
             technicalPosts = posts;
+            localStorage.setItem('technicalPosts', JSON.stringify(posts));
             break;
         case 'cultural':
             culturalPosts = posts;
+            localStorage.setItem('culturalPosts', JSON.stringify(posts));
             break;
         case 'sports':
             sportsPosts = posts;
+            localStorage.setItem('sportsPosts', JSON.stringify(posts));
             break;
     }
 }
@@ -274,6 +308,9 @@ document.head.appendChild(style);
 
 // Initialize posts when page loads
 document.addEventListener('DOMContentLoaded', function() {
+    // Load posts from localStorage
+    loadPostsFromStorage();
+    
     // Determine which club page we're on
     const path = window.location.pathname;
     let clubType = null;

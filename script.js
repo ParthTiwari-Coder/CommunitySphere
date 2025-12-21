@@ -1,7 +1,40 @@
 // ===== GLOBAL STATE =====
 let isUserLoggedIn = false;
 let currentUser = null;
-const registeredUsers = [];
+let registeredUsers = [];
+
+// ===== INITIALIZE AUTH STATE FROM LOCALSTORAGE =====
+function initializeAuthState() {
+    // Load registered users from localStorage
+    const storedUsers = localStorage.getItem('registeredUsers');
+    if (storedUsers) {
+        try {
+            registeredUsers = JSON.parse(storedUsers);
+        } catch (e) {
+            registeredUsers = [];
+        }
+    }
+    
+    // Load current login state
+    const storedLoginState = localStorage.getItem('isUserLoggedIn');
+    const storedCurrentUser = localStorage.getItem('currentUser');
+    
+    if (storedLoginState === 'true' && storedCurrentUser) {
+        isUserLoggedIn = true;
+        currentUser = storedCurrentUser;
+    }
+}
+
+// ===== SAVE AUTH STATE TO LOCALSTORAGE =====
+function saveAuthState() {
+    localStorage.setItem('isUserLoggedIn', isUserLoggedIn.toString());
+    localStorage.setItem('currentUser', currentUser || '');
+}
+
+// ===== SAVE REGISTERED USERS TO LOCALSTORAGE =====
+function saveRegisteredUsers() {
+    localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+}
 
 // ===== THEME TOGGLE =====
 function toggleTheme() {
@@ -78,10 +111,12 @@ function handleSignup(event) {
     if (!hasError) {
         // Add to registered users
         registeredUsers.push({ name, prn, email, password });
+        saveRegisteredUsers();
         
         // Set logged in state
         isUserLoggedIn = true;
         currentUser = name;
+        saveAuthState();
         
         alert(`Welcome to CommunitySphere, ${name}! 🎉\nYour account has been created successfully.`);
         closeModal('signupModal');
@@ -117,6 +152,7 @@ function handleLogin(event) {
         // Set logged in state
         isUserLoggedIn = true;
         currentUser = user.name;
+        saveAuthState();
         
         alert(`Welcome back, ${user.name}! 👋`);
         closeModal('loginModal');
@@ -132,6 +168,7 @@ function handleLogin(event) {
         if (email.includes('@gst.sies.edu.in')) {
             isUserLoggedIn = true;
             currentUser = email.split('@')[0];
+            saveAuthState();
             
             alert('Welcome back! 👋\nLogin successful.');
             closeModal('loginModal');
@@ -168,6 +205,10 @@ function updateAuthUI() {
 function handleLogout() {
     isUserLoggedIn = false;
     currentUser = null;
+    
+    // Clear auth state from localStorage
+    localStorage.removeItem('isUserLoggedIn');
+    localStorage.removeItem('currentUser');
     
     updateAuthUI();
     
@@ -241,6 +282,9 @@ function scrollToClubs() {
 
 // ===== INITIALIZE ON PAGE LOAD =====
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize auth state from localStorage
+    initializeAuthState();
+    
     // Update auth UI on page load
     updateAuthUI();
     
