@@ -6,7 +6,7 @@
 // ⚠️ IMPORTANT: REPLACE THIS VALUE AFTER RUNNING TERRAFORM
 // =================================================================
 // You will get this URL from the Terraform output: "rds_endpoint"
-$servername = "REPLACE_ME_WITH_RDS_ENDPOINT"; 
+$servername = "$servername = "terraform-20251222031631011500000004.c1uy86oaiqum.ap-south-1.rds.amazonaws.com";"; 
 
 // =================================================================
 // CREDENTIALS (Must match the values in your main.tf file)
